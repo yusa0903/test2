@@ -9,10 +9,10 @@ const Anthropic = require("@anthropic-ai/sdk");
 const app = express();
 const PORT = 3001;
 
-// CORSを許可（フロントエンドのVite開発サーバーからのリクエストを受け付ける）
+// CORSを許可（localhostからのリクエストをポート番号問わず受け付ける）
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: /^http:\/\/localhost(:\d+)?$/,
   })
 );
 
