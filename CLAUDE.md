@@ -12,6 +12,13 @@
 
 ---
 
+## リポジトリ
+
+- **GitHubリポジトリ**: https://github.com/yusa0903/test2
+- **プッシュ先**: `git push origin main`
+
+---
+
 ## 技術スタック
 
 | 役割 | 技術 |
