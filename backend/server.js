@@ -84,7 +84,7 @@ JSONのみを返し、説明文は不要です。
   try {
     // Claude Haiku（最新バージョン）でレシート画像を解析
     const response = await anthropic.messages.create({
-      model: "claude-haiku-4-5",
+      model: "claude-sonnet-4-6",
       max_tokens: 2048,
       messages: [
         {
