@@ -1,0 +1,26 @@
+# 依存関係
+node_modules/
+
+# 環境変数（APIキーを含むため必ず除外）
+.env
+.env.local
+.env.production
+
+# ビルド成果物
+dist/
+build/
+
+# ログ
+*.log
+npm-debug.log*
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
+
+# エディタ設定
+.vscode/
+.idea/
+
+# Claude Code ローカル設定
+.claude/

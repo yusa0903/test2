@@ -1,0 +1,132 @@
+# CLAUDE.md
+
+このファイルはClaude Codeがプロジェクトを操作する際のルールと指針を定めています。
+
+---
+
+## プロジェクト概要
+
+- **作業ディレクトリ**: `C:\temp\claude code1`
+- **アプリケーション**: レシート家計簿アプリ（レシート画像をアップロードしてAIが内容を解析・集計）
+- **構成**: フロントエンド / バックエンド 分離構成
+
+---
+
+## 技術スタック
+
+| 役割 | 技術 |
+|---|---|
+| フロントエンドフレームワーク | React 18 |
+| フロントエンドビルドツール | Vite 6 |
+| フロントエンド言語 | JavaScript (JSX) |
+| HTTPクライアント | axios |
+| グラフ描画 | chart.js / react-chartjs-2 |
+| バックエンドフレームワーク | Express 4 |
+| バックエンドランタイム | Node.js |
+| AI推論 | Anthropic Claude API (`@anthropic-ai/sdk`) |
+| ファイルアップロード | multer（メモリストレージ） |
+| 環境変数 | dotenv |
+
+---
+
+## ディレクトリ構成
+
+```
+claude code1/
+├── backend/
+│   ├── server.js        # Expressサーバー（ポート3001）
+│   ├── package.json
+│   └── .env             # ANTHROPIC_API_KEY 等（コミット禁止）
+└── frontend/
+    ├── src/
+    │   ├── main.jsx
+    │   ├── App.jsx
+    │   ├── App.css
+    │   └── components/
+    │       ├── ReceiptUploader.jsx
+    │       ├── ExpenseList.jsx
+    │       ├── CategorySummary.jsx
+    │       └── Charts.jsx
+    ├── vite.config.js
+    └── package.json
+```
+
+---
+
+## 開発サーバーの起動
+
+```bash
+# バックエンド（backend/ ディレクトリで実行）
+npm run dev   # node --watch server.js でポート3001起動
+
+# フロントエンド（frontend/ ディレクトリで実行）
+npm run dev   # Vite開発サーバー http://localhost:5173 起動
+```
+
+CORSはフロントエンドの `http://localhost:5173` のみ許可済み。
+
+---
+
+## コンポーネント命名規則
+
+- **ファイル名**: PascalCase（例: `ReceiptUploader.jsx`, `ExpenseList.jsx`）
+- **コンポーネント名**: ファイル名と一致させる（例: `function ReceiptUploader()`）
+- **CSSクラス名**: kebab-case（例: `expense-list`, `upload-btn`）
+- **状態変数**: camelCase（例: `expenses`, `isLoading`, `chartData`）
+- **イベントハンドラ**: `handle` プレフィックス（例: `handleUpload`, `handleDelete`）
+
+---
+
+## Git運用ルール
+
+### 基本方針
+- **コードを変更するたびに必ずGitHubへプッシュすること**
+- コミットは変更の単位ごとに細かく行い、1つのコミットに複数の無関係な変更をまとめない
+
+### コミット手順
+1. 変更内容を確認: `git status` / `git diff`
+2. 関連ファイルをステージング: `git add <ファイル名>`（`git add .` は慎重に使う）
+3. コミットメッセージを付けてコミット
+4. **即座にプッシュ**: `git push origin <ブランチ名>`
+
+### コミットメッセージ規約
+
+| プレフィックス | 用途 |
+|---|---|
+| `feat:` | 新機能の追加 |
+| `fix:` | バグ修正 |
+| `refactor:` | リファクタリング |
+| `docs:` | ドキュメント変更 |
+| `chore:` | ビルド・設定変更 |
+| `test:` | テスト追加・修正 |
+
+例: `feat: レシート画像のカテゴリ分類機能を追加`
+
+### ブランチ運用
+- `main` / `master`: 本番ブランチ。直接コミットしない
+- `feature/<機能名>`: 新機能開発
+- `fix/<バグ名>`: バグ修正
+- 作業完了後はPull Requestを作成してマージする
+
+### 禁止事項
+- `--force` プッシュは原則禁止（ユーザーの明示的な指示がある場合のみ可）
+- `--no-verify` によるフック無効化は禁止
+- `.env` や認証情報（`ANTHROPIC_API_KEY` 等）を含むファイルのコミットは禁止
+
+---
+
+## コーディング規約
+
+- 過度なエンジニアリングを避け、シンプルな実装を優先する
+- 不要なコメント・ドキュメントは追加しない
+- エラーハンドリングは実際に発生しうる箇所のみに限定する
+- 使われていないコードは削除する
+
+---
+
+## 注意事項
+
+- ファイルを編集する前に必ず読み込んでから変更する
+- 破壊的な操作（ファイル削除、ブランチ削除など）は実行前にユーザーへ確認する
+- `.env` ファイルは絶対にコミットしない（`.gitignore` に含まれているか常に確認する）
+- 新規ファイルの作成は本当に必要な場合のみ行う
